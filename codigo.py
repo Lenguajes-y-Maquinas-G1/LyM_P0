@@ -6,8 +6,8 @@ def crear_matriz(n:int):
             filas.append(0)
         matriz.append(filas)
     return matriz
-matriz=crear_matriz(3)
-matriz[0][0]=1
+matriz=crear_matriz(10)
+matriz[7][4]=1
 for i in matriz:
     print (i)
 
@@ -22,12 +22,31 @@ def posicion():
                     break
 
 
-    pass
-
-print(posicion())
 
 
+def walk_arriba(v,matriz):
+    fila=posicion()[0]-v
+    columna=posicion()[1]
+    matriz[posicion()[0]][posicion()[1]]=0
+    matriz[fila][columna]=1
+    return matriz
 
+def walk_abajo(v,matriz):
+    fila=posicion()[0]+v
+    columna=posicion()[1]
+    matriz[posicion()[0]][posicion()[1]]=0
+    matriz[fila][columna]=1
+    return matriz
+def walk_right(v,matriz):
+    fila=posicion()[0]
+    columna=posicion()[1]+v
+    matriz[posicion()[0]][posicion()[1]]=0
+    matriz[fila][columna]=1
+    return matriz
 
-def walk(v:int,d:str):
-    pass
+def walk_left(v,matriz):
+    fila=posicion()[0]
+    columna=posicion()[1]-v
+    matriz[posicion()[0]][posicion()[1]]=0
+    matriz[fila][columna]=1
+    return matriz
