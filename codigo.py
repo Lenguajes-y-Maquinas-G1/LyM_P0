@@ -57,13 +57,13 @@ def walk_left(v,matriz):
 
 
 def walk(v:int,d:str):
-    if d =='front':
+    if d == 'front' or d == 'north':
         walk_arriba(v, matriz)
-    elif d =='back':
+    elif d =='back' or d== 'south':
         walk_abajo(v, matriz)
-    elif d =='right':
+    elif d =='right' or d== 'east':
         walk_right(v, matriz)
-    elif d =='left':
+    elif d =='left' or d== 'west':
         walk_left(v, matriz)
 
     pass
