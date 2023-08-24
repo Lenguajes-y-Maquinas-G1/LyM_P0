@@ -7,7 +7,7 @@ def crear_matriz(n:int):
         matriz.append(filas)
     return matriz
 matriz=crear_matriz(3)
-matriz[2][1]=1
+matriz[0][0]=1
 for i in matriz:
     print (i)
 
@@ -16,9 +16,9 @@ def posicion():
 
     for fila in range (len(matriz)):
         if 1 in matriz[fila]:
-            for valor in matriz[fila]:
-                if valor ==1:
-                    return (fila,valor)
+            for valor in range(len(matriz[fila])):
+                if matriz[fila][valor]==1:
+                    return fila,valor
                     break
 
 
