@@ -50,3 +50,20 @@ def walk_left(v,matriz):
     matriz[posicion()[0]][posicion()[1]]=0
     matriz[fila][columna]=1
     return matriz
+
+
+
+
+
+
+def walk(v:int,d:str):
+    if d =='front':
+        walk_arriba(v, matriz)
+    elif d =='back':
+        walk_abajo(v, matriz)
+    elif d =='right':
+        walk_right(v, matriz)
+    elif d =='left':
+        walk_left(v, matriz)
+
+    pass
