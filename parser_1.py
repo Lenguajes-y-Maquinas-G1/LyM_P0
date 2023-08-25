@@ -12,4 +12,3 @@ for blank_string in range(0, blank_strings): token_list.remove("")
 reserved_structures = ["defvar", "defproc", "while", "else", "if", "repeat", "times"]
 
 def check_code():
-        
