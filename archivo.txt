@@ -1,3 +1,24 @@
-jdsfkjsdk fksdjkfsd holam .. // 
+defVar nom 0
+2 defVar x 0
+3 defVar y 0
+4 defVar one 0
+6 defProc putCB (c , b )
+7 {
+8 drop( c ) ;
+9 letGo ( b ) ;
+10 walk( n )
+11 }
+13 defProc goNorth ()
+14 {
+16 wh i le can(walk(1 , north ) ) { walk(1 , north ) }
+18 }
+20 defProc goWest ()
+21 {
+23 i f can(walk(1 , west ) ) { walk(1 , west ) } e l s e nop ()
+25 }
+27 {
+28 jump (3 ,3) ;
+29 putCB (2 ,1)
+30 }
 
 
