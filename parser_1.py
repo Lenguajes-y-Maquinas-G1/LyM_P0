@@ -9,7 +9,6 @@ blank_strings = token_list.count("")
 for tabulate in range(0, tabulates): token_list.remove("\t")
 for blank_string in range(0, blank_strings): token_list.remove("")
 
-print(token_list)
 
 reserved_structures = ["defvar", "defproc", "while", "else", "if", "repeat", "times"]
 
@@ -24,10 +23,31 @@ def def_var(counter):
     else:
         return False
 
-i = 0
 
-while i > len(token_list):
-    answer = def_var(i)
+
+
+def prueba(token_list):
+    i=0
+    while i < len(token_list):
+        def_var(i)
+        i+=1
+    return True
+
+def prueba2(token_list):
+    i=0
+    while i < len(token_list):
+        if token_list[i]=="defvar":
+            if token_list[i + 1] in  reserved_structures or token_list[i + 1]=='\n' :
+                return False
+            
+            if not(token_list[i+ 2].isnumeric()):
+                return False
+        i+=1
+    return True
+
+print(prueba2(token_list))
+
+#print(token_list)
     
        
 
