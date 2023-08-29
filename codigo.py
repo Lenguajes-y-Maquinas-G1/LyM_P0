@@ -67,3 +67,6 @@ def walk(v:int,d:str):
         walk_left(v, matriz)
 
     pass
+
+
+print(len("hola") - 1)

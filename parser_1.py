@@ -9,9 +9,56 @@ blank_strings = token_list.count("")
 for tabulate in range(0, tabulates): token_list.remove("\t")
 for blank_string in range(0, blank_strings): token_list.remove("")
 
-
 reserved_structures = ["defvar", "defproc", "while", "else", "if", "repeat", "times"]
 
+def def_var(i):
+    intern_counter = 0
+    if not (token_list[i + 1].isalnum()):
+        intern_counter += 1
+    if not (token_list[i + 2].isnumeric()):
+        intern_counter += 1
+        
+    return intern_counter
+
+
+def def_proc(i):
+    intern_counter = 0
+    if not (token_list[i + 1].isalnum()):
+        intern_counter += 1
+    if token_list[i + 2] != "(":
+        intern_counter += 1
+        
+    close = token_list[(i + 3):len(token_list)]
+    closed = token_list[(i + 3):close]
+    
+    if closed[len(closed)-1] in [".", ","]:
+        intern_counter += 1
+    
+    for value in range(len(closed)):
+        if not(closed[value].isalnum()) or not(closed[value] == ","):
+            intern_counter += 1 
+        if closed[value] == ",":
+            if not (closed[value - 1].isalnum()):
+                intern_counter += 1
+            if not (closed[value + 1].isalnum()):
+                intern_counter += 1
+
+    return intern_counter
+
+        
+def command_block():
+    pass
+
+counter = 0
+i = 0
+while i < len(token_list):
+    if token_list[i] in reserved_structures:
+        if token_list[i] == "defvar":
+            counter += def_var(i)
+        if token_list[i] == "defproc":
+            counter += def_proc(i)
+
+"""
 def def_var(counter):
     if token_list[counter + 1] != "":
         pass
@@ -49,6 +96,4 @@ print(prueba2(token_list))
 
 #print(token_list)
     
-       
-
-    
+"""  
