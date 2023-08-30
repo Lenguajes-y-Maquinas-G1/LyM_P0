@@ -41,6 +41,7 @@ def def_proc(i):
             if value == ")":
                 closed.append(close[close.index(value) + 1])
                 break
+        
     
         if closed[len(closed)-1] != ";":
             intern_counter += 1
@@ -53,19 +54,23 @@ def def_proc(i):
         #if closed[len(closed)-1] in [".", ","]:
             #intern_counter += 1
 
-        if closed[0] == ",":
-            intern_counter += 1
-        
-        for z in range(len(closed)):
-            if z % 2 == 0:
-                if not closed[z].isalnum():
-                    intern_counter += 1
-            else:
-                if closed[z] != ',':
-                    intern_counter += 1
-                    
-        if len(closed) % 2 == 0:
-            intern_counter += 1
+        if len (closed) == 0:
+            return intern_counter
+        else:
+
+            if closed[0] == ",":
+                intern_counter += 1
+            
+            for z in range(len(closed)):
+                if z % 2 == 0:
+                    if not closed[z].isalnum():
+                        intern_counter += 1
+                else:
+                    if closed[z] != ',':
+                        intern_counter += 1
+                        
+            if len(closed) % 2 == 0:
+                intern_counter += 1
 
     return intern_counter
 
@@ -127,4 +132,7 @@ while i < len(token_list):
         i += 1
     
 
-print(counter)
+if counter >0:
+    print("NO")
+if counter==0:
+    print("SI")

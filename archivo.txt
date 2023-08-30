@@ -1,2 +1,2 @@
-defProc hola (a,b,@);
+defProc hola ();
 defVar chao 2;
