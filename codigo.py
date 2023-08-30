@@ -68,5 +68,3 @@ def walk(v:int,d:str):
 
     pass
 
-
-print(len("hola") - 1)
