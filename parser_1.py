@@ -69,7 +69,46 @@ def def_proc(i):
 
     return intern_counter
 
+def def_proc2(i):
+    intern_counter=0
+    if not (token_list[i + 1].isalnum()):
+        intern_counter += 1
+    if token_list[i + 2] != "(":
+        intern_counter += 1
+    
+    if token_list[i + 2] == "(":
+        close = token_list[(i + 3):len(token_list)]
+        closed = []
+    
+        for value in close:
+            closed.append(str(value))
+            if value == ")":
+                closed.append(close[close.index(value) + 1])
+                break
+    
+        if closed[len(closed)-1] != ";":
+            intern_counter += 1
+            closed.pop()
+            closed.pop()
+    
+        closed.pop()
+        closed.pop()
+    
+        #if closed[len(closed)-1] in [".", ","]:
+            #intern_counter += 1
+
+        if closed[0] == ",":
+            intern_counter += 1
         
+        for z in range(len(closed) - 1):
+            if closed[z]==',':
+                if not(closed[z-1].isalnum()):
+                    intern_counter += 1
+                if not(closed[z+1].isalnum()):
+                    intern_counter += 1
+                
+    return intern_counter
+
 def command_block():
     pass
 
@@ -82,6 +121,7 @@ while i < len(token_list):
             i += 1
         if token_list[i] == "defproc":
             counter += def_proc(i)
+            counter += def_proc2(i)
             i += 1
     else:
         i += 1
