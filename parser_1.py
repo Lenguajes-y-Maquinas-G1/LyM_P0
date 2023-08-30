@@ -56,7 +56,7 @@ def def_proc(i):
         if closed[0] == ",":
             intern_counter += 1
         
-        for z in range(len(closed) - 1):
+        for z in range(len(closed)):
             if z % 2 == 0:
                 if not closed[z].isalnum():
                     intern_counter += 1
@@ -121,7 +121,7 @@ while i < len(token_list):
             i += 1
         if token_list[i] == "defproc":
             counter += def_proc(i)
-            counter += def_proc2(i)
+            #counter += def_proc2(i)
             i += 1
     else:
         i += 1

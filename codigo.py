@@ -68,3 +68,4 @@ def walk(v:int,d:str):
 
     pass
 
+print(4%2)
