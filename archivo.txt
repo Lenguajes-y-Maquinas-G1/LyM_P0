@@ -1,2 +1,3 @@
 defProc hola ();
 defVar chao 2;
+walk(2,NoRth)
