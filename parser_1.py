@@ -11,6 +11,7 @@ for blank_string in range(0, blank_strings): token_list.remove("")
 
 reserved_structures = ["defvar", "defproc", "while", "else", "if", "repeat", "times","walk","leap","turn","turnto","nop"]
 basics=["drop","get","grab","letgo"]
+primitives= ["drop","get","grab","letgo","walk","leap","turn","turnto","nop"]
 
 
 print(token_list)
@@ -94,6 +95,13 @@ def nop(i):
     if token_list[i+1] != '(':
         intern_counter+=1
     if token_list[i+2] != ")":
+        intern_counter+=1
+    return intern_counter
+def can(i):
+    intern_counter=0
+    if token_list[i+1] != '(':
+        intern_counter+=1
+    if token_list[i+2] not in primitives:
         intern_counter+=1
     return intern_counter
 
