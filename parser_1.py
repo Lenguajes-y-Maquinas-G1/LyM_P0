@@ -14,7 +14,7 @@ basics=["drop","get","grab","letgo"]
 primitives= ["drop","get","grab","letgo","jump","walk","leap","turn","turnto","nop"]
 control_structures = ["if", "while"]
 conditions = ["facing", "can", "not"]
-by_user = []
+by_user = {}
 
 
 print(token_list)
@@ -32,8 +32,7 @@ def def_var(i):
 
 def def_proc(i):
     intern_counter = 0
-    
-    by_user.append(token_list[i+1])
+    comma_counter = 0
     
     if not (token_list[i + 1].isalnum()):
         intern_counter += 1
@@ -49,11 +48,6 @@ def def_proc(i):
             if value == ")":
                 closed.append(close[close.index(value) + 1])
                 break
-        
-        if closed[len(closed)-1] != ";":
-            intern_counter += 1
-            closed.pop()
-            closed.pop()
     
         closed.pop()
         closed.pop()
@@ -62,7 +56,9 @@ def def_proc(i):
             #intern_counter += 1
 
         if len (closed) == 0:
-            return intern_counter
+            by_user[token_list[i+1]] = 0
+            return intern_counter, by_user
+        
         else:
 
             if closed[0] == ",":
@@ -73,14 +69,17 @@ def def_proc(i):
                     if not closed[z].isalnum():
                         intern_counter += 1
                 else:
+                    if closed[z] == ",":
+                        comma_counter += 1
                     if closed[z] != ',':
                         intern_counter += 1
                         
             if len(closed) % 2 == 0:
                 intern_counter += 1
 
-    return intern_counter
-
+    by_user[token_list[i+1]] = comma_counter + 1
+    
+    return intern_counter, by_user
 
 def turnto(i):
     direcciones=['north','east','south','west']
@@ -195,7 +194,8 @@ def conditional(i):
 def command_block(i):
     intern_counter = 0
     
-    while i < len(token_list):
+    z = 0
+    while z < len(token_list):
         if token_list[i + 1] in primitives:
             pass
             
@@ -211,7 +211,8 @@ while i < len(token_list):
             counter += def_var(i)
             i += 1
         if token_list[i] == "defproc":
-            counter += def_proc(i)
+            counter += def_proc(i)[0]
+            by_user = def_proc(i)[1]
             i += 2
         if token_list[i] == "{":
             counter += command_block(i)
@@ -237,7 +238,8 @@ while i < len(token_list):
         i += 1
     else:
         i += 1
-    
+
+print(by_user)    
 
 if counter >0:
     print("NO")
