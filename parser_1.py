@@ -9,9 +9,12 @@ blank_strings = token_list.count("")
 for tabulate in range(0, tabulates): token_list.remove("\t")
 for blank_string in range(0, blank_strings): token_list.remove("")
 
-reserved_structures = ["defvar", "defproc", "while", "else", "if", "repeat", "times","walk","leap","turn","turnto","nop"]
+reserved_structures = ["defvar","defproc","while","else","if","repeat","times","walk","leap","turn","turnto","nop"]
 basics=["drop","get","grab","letgo"]
-primitives= ["drop","get","grab","letgo","walk","leap","turn","turnto","nop"]
+primitives= ["drop","get","grab","letgo","jump","walk","leap","turn","turnto","nop"]
+control_structures = ["if", "while"]
+conditions = ["facing", "can", "not"]
+by_user = []
 
 
 print(token_list)
@@ -26,91 +29,12 @@ def def_var(i):
         
     return intern_counter
 
-def turnto(i):
-    direcciones=['north','east','south','west']
-    intern_counter=0
-    if token_list[i+1] != '(':
-        intern_counter+=1
-    if token_list[i+2] not in direcciones:
-        intern_counter+=1
-    if token_list[i+3] != ')':
-        intern_counter+=1
-    return intern_counter
-
-def walkcheck(i):
-    direcciones=['front','right','left','back','north','east','south','west']
-    intern_counter=0
-    if token_list[i+1] != '(':
-        intern_counter+=1
-    if not(token_list[i+2].isnumeric()):
-        intern_counter+=1
-    if token_list[i+3] != ',':
-        intern_counter+=1
-    if token_list [i + 4] not in direcciones:
-        intern_counter+=1
-    if token_list[i+5] != ')':
-        intern_counter+=1
-    return intern_counter
-
-def leapcheck(i):
-    direcciones=['front','right','left','back','north','east','south','west']
-    intern_counter=0
-    if token_list[i+1] != '(':
-        intern_counter+=1
-    if not(token_list[i+2].isnumeric()):
-        intern_counter+=1
-    if token_list[i+3]==")":
-        pass
-    if token_list[i+3]==",":
-        if token_list [i + 4] not in direcciones:
-            intern_counter+=1
-        if token_list[i+5] != ')':
-            intern_counter+=1
-    if token_list[i+3] != ',' and token_list[i+3] != ')':
-        intern_counter+=1
-        
-    return intern_counter
-def turncheck(i):
-    intern_counter=0
-    direcciones=['left','right','around']
-    if token_list[i+1] != '(':
-        intern_counter+=1
-    if token_list [i + 2] not in direcciones:
-        intern_counter+=1
-    if token_list[i+3] != ')':
-        intern_counter+=1
-    return intern_counter
-def basiccomandscheck(i):
-    intern_counter=0
-    if token_list[i+1] != '(':
-        intern_counter+=1
-    if not(token_list [i + 2].isnumeric()):
-        intern_counter+=1
-    if token_list[i+3] != ')':
-        intern_counter+=1
-    return intern_counter
-
-def nop(i):
-    intern_counter=0
-    if token_list[i+1] != '(':
-        intern_counter+=1
-    if token_list[i+2] != ")":
-        intern_counter+=1
-    return intern_counter
-def can(i):
-    intern_counter=0
-    if token_list[i+1] != '(':
-        intern_counter+=1
-    if token_list[i+2] not in primitives:
-        intern_counter+=1
-    return intern_counter
-
-    
-    
-
 
 def def_proc(i):
     intern_counter = 0
+    
+    by_user.append(token_list[i+1])
+    
     if not (token_list[i + 1].isalnum()):
         intern_counter += 1
     if token_list[i + 2] != "(":
@@ -126,7 +50,6 @@ def def_proc(i):
                 closed.append(close[close.index(value) + 1])
                 break
         
-    
         if closed[len(closed)-1] != ";":
             intern_counter += 1
             closed.pop()
@@ -158,48 +81,127 @@ def def_proc(i):
 
     return intern_counter
 
-def def_proc2(i):
-    intern_counter=0
-    if not (token_list[i + 1].isalnum()):
-        intern_counter += 1
-    if token_list[i + 2] != "(":
-        intern_counter += 1
-    
-    if token_list[i + 2] == "(":
-        close = token_list[(i + 3):len(token_list)]
-        closed = []
-    
-        for value in close:
-            closed.append(str(value))
-            if value == ")":
-                closed.append(close[close.index(value) + 1])
-                break
-    
-        if closed[len(closed)-1] != ";":
-            intern_counter += 1
-            closed.pop()
-            closed.pop()
-    
-        closed.pop()
-        closed.pop()
-    
-        #if closed[len(closed)-1] in [".", ","]:
-            #intern_counter += 1
 
-        if closed[0] == ",":
-            intern_counter += 1
+def turnto(i):
+    direcciones=['north','east','south','west']
+    intern_counter=0
+    if token_list[i+1] != '(':
+        intern_counter+=1
+    if token_list[i+2] not in direcciones:
+        intern_counter+=1
+    if token_list[i+3] != ')':
+        intern_counter+=1
         
-        for z in range(len(closed) - 1):
-            if closed[z]==',':
-                if not(closed[z-1].isalnum()):
-                    intern_counter += 1
-                if not(closed[z+1].isalnum()):
-                    intern_counter += 1
-                
     return intern_counter
 
-def command_block():
-    pass
+
+def walkcheck(i):
+    direcciones=['front','right','left','back','north','east','south','west']
+    intern_counter=0
+    if token_list[i+1] != '(':
+        intern_counter+=1
+    if not(token_list[i+2].isnumeric()):
+        intern_counter+=1
+    if token_list[i+3] != ',':
+        intern_counter+=1
+    if token_list [i + 4] not in direcciones:
+        intern_counter+=1
+    if token_list[i+5] != ')':
+        intern_counter+=1
+        
+    return intern_counter
+
+
+def leapcheck(i):
+    direcciones=['front','right','left','back','north','east','south','west']
+    intern_counter=0
+    if token_list[i+1] != '(':
+        intern_counter+=1
+    if not(token_list[i+2].isnumeric()):
+        intern_counter+=1
+    if token_list[i+3]==")":
+        pass
+    if token_list[i+3]==",":
+        if token_list [i + 4] not in direcciones:
+            intern_counter+=1
+        if token_list[i+5] != ')':
+            intern_counter+=1
+    if token_list[i+3] != ',' and token_list[i+3] != ')':
+        intern_counter+=1
+        
+    return intern_counter
+
+
+def turncheck(i):
+    intern_counter=0
+    direcciones=['left','right','around']
+    if token_list[i+1] != '(':
+        intern_counter+=1
+    if token_list [i + 2] not in direcciones:
+        intern_counter+=1
+    if token_list[i+3] != ')':
+        intern_counter+=1
+        
+    return intern_counter
+
+
+def basiccomandscheck(i):
+    intern_counter=0
+    if token_list[i+1] != '(':
+        intern_counter+=1
+    if not(token_list [i + 2].isnumeric()):
+        intern_counter+=1
+    if token_list[i+3] != ')':
+        intern_counter+=1
+        
+    return intern_counter
+
+
+def nop(i):
+    intern_counter=0
+    if token_list[i+1] != '(':
+        intern_counter+=1
+    if token_list[i+2] != ")":
+        intern_counter+=1
+        
+    return intern_counter
+
+
+def can(i):
+    intern_counter=0
+    if token_list[i+1] != '(':
+        intern_counter+=1
+    if token_list[i+2] not in primitives:
+        intern_counter+=1
+        
+    return intern_counter
+
+
+def conditional(i):
+    intern_counter = 0
+    if token_list[i+1] != "if":
+        intern_counter += 1
+    if token_list[i+2] != "can":
+        intern_counter += 1
+    if token_list[i+3] != "(":
+        intern_counter += 1
+    else:
+        if token_list[i+4] in primitives:
+            pass #TODO: Terminar función.
+    
+    return intern_counter
+
+
+def command_block(i):
+    intern_counter = 0
+    
+    while i < len(token_list):
+        if token_list[i + 1] in primitives:
+            pass
+            
+    return intern_counter 
+            
+    
 
 counter = 0
 i = 0
@@ -210,7 +212,9 @@ while i < len(token_list):
             i += 1
         if token_list[i] == "defproc":
             counter += def_proc(i)
-            #counter += def_proc2(i)
+            i += 2
+        if token_list[i] == "{":
+            counter += command_block(i)
             i += 1
         if token_list[i] == "walk":
             counter += walkcheck(i)
