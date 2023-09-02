@@ -45,7 +45,7 @@ if isValid(parrentesis):
     line_change = token_list.count("\n")
     for tabulate in range(0, tabulates): token_list.remove("\t")
     for blank_string in range(0, blank_strings): token_list.remove("")
-    for line_change in range(0, line_change): token_list.remove("\n")
+    #for line_change in range(0, line_change): token_list.remove("\n")
 
 
     # A list with all the structures used by the program that can´t be used as variables.
@@ -81,17 +81,22 @@ if isValid(parrentesis):
             if token_list[i] == "{":
                 close = token_list[(i):len(token_list)]
                 closed = []
-            o = 0
-            c = 0
-            for value in close:
-                closed.append(str(value))
-                if value == "{":
-                    o += 1
-                elif value == "}":
-                    c += 1
-                    if o == c:
-                        closed.append(close[close.index(value)])
-                        break
-    i += 1
-
-print(counter)
+                o = 0
+                c = 0
+                for value in close:
+                    closed.append(str(value))
+                    if value == "{":
+                        o += 1
+                    elif value == "}":
+                        c += 1
+                        if o == c:
+                            closed.append(value)
+                            break
+                
+                if "\n" in closed:
+                    print(closed)
+                    if not (closed.count("\n")-2 == closed.count(";")):
+                        print("no se cumple")
+                        counter += 1    
+                
+        i += 1
