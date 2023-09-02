@@ -2,6 +2,7 @@ import tokenize as tk
 
 # Creates a tokenizer that transforms a txt file into a list. Each string of the of the txt file adopts
 # an index in the list.
+
 with tk.open(filename="archivo.txt") as file:
     tokens = tk.generate_tokens(file.readline)
     token_list = [token.string.lower() for token in tokens]
@@ -29,11 +30,14 @@ simple_commands = ["jump", "walk", "leap", "turn", "turnto", "drop", "get", "gra
 conditionals = ["if", "else"]
 loop = ["while"]
 repeat_times = ["repeat", "times"]
+inside_var=[]
+comas=[',',"{", "}","[","]","(",")",";"]
+direcciones=['north','east','south','west']
 
 by_user = {}
 
 
-print(token_list)
+
 
 
 def def_var(i):
@@ -49,6 +53,7 @@ def def_var(i):
     lowed by an initial value.
     """
     intern_counter = 0
+    inside_var.append(token_list[i + 1])
     if not (token_list[i + 1].isalnum()):
         intern_counter += 1
     if not (token_list[i + 2].isnumeric()):
@@ -138,7 +143,14 @@ def def_proc(i):
             if len(closed) % 2 == 0:
                 intern_counter += 1
 
+    
+
+
     by_user.update({str(token_list[i+1]):by_user_list})
+    for llave in by_user:
+        inside_var.append(llave)
+        for i in by_user[llave]:
+            inside_var.append(i)
     
     
     
@@ -156,6 +168,19 @@ def turnto(i):
         
     return intern_counter
 
+def jumpcheck(i):
+    intern_counter=0
+    if token_list[i+1] != '(':
+        intern_counter+=1
+    if not(token_list[i+2].isnumeric()):
+        intern_counter+=1
+    if token_list[i+3] != ',':
+        intern_counter+=1
+    if not(token_list[i+4].isnumeric()):
+        intern_counter+=1
+    if token_list[i+5] != ')':
+        intern_counter+=1 
+    return intern_counter
 
 def walkcheck(i):
     direcciones=['front','right','left','back','north','east','south','west']
@@ -215,7 +240,8 @@ def basiccomandscheck(i):
     if token_list[i+1] != '(':
         intern_counter+=1
     if not(token_list [i + 2].isnumeric()):
-        intern_counter+=1
+        if token_list [i + 2] not in inside_var:
+            intern_counter+=1
     if token_list[i+3] != ')':
         intern_counter+=1
         
@@ -270,12 +296,12 @@ while i < len(token_list):
         by_user = answers[1]
         i += 1
         
-    if token_list[i] == "{":
-        counter += command_block(token_list, i)
-        i += 1
-        
     if token_list[i] == "walk":
         counter += walkcheck(i)
+        i += 1
+
+    if token_list[i] == "jump":
+        counter += jumpcheck(i)
         i += 1
         
     if token_list[i] == "leap":
@@ -295,16 +321,59 @@ while i < len(token_list):
         i += 1
         
     if token_list[i] in basics:
-        print('aaaa')
         counter+= basiccomandscheck(i)
         i += 1
         
     else:
         i += 1
 
-print(by_user)    
+ 
 
+
+i=0
+while i < len(token_list):
+
+    if token_list[i] in reserved_structures: 
+        pass
+    elif token_list[i] in basics: 
+        pass
+    elif token_list[i] in primitives: 
+        pass
+    elif token_list[i] in control_structures: 
+        pass
+    elif token_list[i] in conditions:  
+        pass
+    elif token_list[i] in simple_commands: 
+        pass
+    elif token_list[i] in conditionals: 
+        pass
+    elif token_list[i] in loop:
+        pass
+    elif token_list[i] in repeat_times:  
+        pass
+    elif token_list[i] in inside_var:
+        pass
+    elif token_list[i] in comas: 
+        pass
+    elif token_list[i] in by_user: 
+        pass
+    elif token_list[i].isnumeric():
+        pass
+    elif token_list[i] in by_user: 
+        pass
+    elif token_list[i] in direcciones: 
+        pass
+
+    elif token_list[i] == ' ':
+        pass
+    else:
+        print(token_list[i],i)
+        counter+=1
+            
+    i+=1
+    
 if counter > 0:
-    print("Invalid")
+    print("Invalid") 
+print(counter)
 if counter == 0:
     print("Valid")
