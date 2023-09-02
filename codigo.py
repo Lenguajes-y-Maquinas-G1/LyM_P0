@@ -124,3 +124,24 @@ def isValid(token_list):
         return len(stack) == 0
 
 print(isValid(token_list))
+
+
+
+def parse_serial_commands(tokens):
+    serial_commands = []
+    current_command = []
+
+    for token in tokens:
+        if token == ';':
+            if current_command:
+                serial_commands.append(current_command)
+                current_command = []
+        else:
+            current_command.append(token)
+
+    if current_command:
+        serial_commands.append(current_command)
+
+    return serial_commands
+
+print(parse_serial_commands(token_list))
