@@ -391,6 +391,16 @@ if isValid(parrentesis):
         elif token_list[i] in comas:
             if token_list[i-1]==';': 
                 counter+=1
+            #TODOA MEJORAR 
+            if token_list[i] == "{":
+                close = token_list[(i + 3):len(token_list)]
+                closed = []
+        
+            for value in close:
+                closed.append(str(value))
+                if value == "}":
+                    closed.append(close[close.index(value) + 1])
+                    break
         elif token_list[i] in by_user: 
             pass
         elif token_list[i].isnumeric():
