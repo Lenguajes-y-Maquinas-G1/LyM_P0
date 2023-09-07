@@ -243,7 +243,8 @@ if isValid(parrentesis):
         if token_list[i+1] != '(':
             intern_counter+=1
         if not(token_list[i+2].isnumeric()):
-            intern_counter+=1
+            if not(token_list[i+2] in inside_var):
+                intern_counter+=1
         if token_list[i+3]==")":
             pass
         if token_list[i+3]==",":
